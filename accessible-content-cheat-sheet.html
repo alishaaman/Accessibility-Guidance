@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Making Accessible Content Cheat Sheet</title>
+<style>
+  :root {
+    --border-color: #666;
+    --header-bg: #003d5c;
+    --header-text: #ffffff;
+    --row-alt-bg: #f2f6f8;
+    --text-color: #1a1a1a;
+    --link-color: #00457c;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: #ffffff;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+
+  header {
+    border-bottom: 3px solid var(--header-bg);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+
+  h1 {
+    color: var(--header-bg);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  h2 {
+    color: var(--header-bg);
+    font-size: 1.4rem;
+    margin-top: 2.5rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.3rem;
+  }
+
+  p.intro {
+    max-width: 70ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  nav.toc {
+    background-color: var(--row-alt-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  nav.toc h2 {
+    margin-top: 0;
+    border-bottom: none;
+    font-size: 1.1rem;
+  }
+
+  nav.toc ol {
+    columns: 2;
+    padding-left: 1.2rem;
+  }
+
+  nav.toc a {
+    color: var(--link-color);
+    text-decoration: underline;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+  }
+
+  caption {
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  th, td {
+    border: 1px solid var(--border-color);
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  thead th {
+    background-color: var(--header-bg);
+    color: var(--header-text);
+  }
+
+  tbody th[scope="row"] {
+    background-color: var(--row-alt-bg);
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  tbody tr:nth-child(even) td {
+    background-color: var(--row-alt-bg);
+  }
+
+  a {
+    color: var(--link-color);
+  }
+
+  footer {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    color: #444;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    background: #000;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    z-index: 100;
+  }
+
+  .skip-link:focus {
+    left: 0.5rem;
+    top: 0.5rem;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .aria-badge {
+    display: inline-block;
+    background-color: var(--header-bg);
+    color: var(--header-text);
+    font-weight: bold;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+  }
+
+  .aria-badge:hover,
+  .aria-badge:focus {
+    background-color: #00263a;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 700px) {
+    nav.toc ol {
+      columns: 1;
+    }
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
+    thead {
+      display: none;
+    }
+    tbody tr {
+      border: 1px solid var(--border-color);
+      margin-bottom: 1rem;
+    }
+    tbody th[scope="row"] {
+      border-bottom: none;
+    }
+    td {
+      border-top: none;
+    }
+    td::before {
+      content: attr(data-label) ": ";
+      font-weight: bold;
+      display: block;
+      color: var(--header-bg);
+    }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header>
+  <a class="aria-badge" href="https://www.w3.org/WAI/standards-guidelines/aria/" target="_blank" rel="noopener noreferrer">
+    ARIA <span class="sr-only">&ndash; learn about WAI-ARIA accessibility standards (opens in a new tab)</span>
+  </a>
+  <h1>Making Accessible Content Cheat Sheet</h1>
+  <p class="intro">
+    Accessible practices ensure screen readers, speech-to-text software, keyboard-only navigation,
+    magnification tools, captions, and other assistive technologies can access the same information
+    as everyone else. It is also a legal requirement for public bodies. The best way to find out if
+    your content is accessible is to run the in-built accessibility checker in MS Word, PowerPoint or
+    Excel. If information cannot be accessed, understood, navigated or interacted with by all users,
+    it is not fully accessible.
+  </p>
+</header>
+
+<nav class="toc" aria-label="Table of contents">
+  <h2 id="toc-heading">Contents</h2>
+  <ol aria-labelledby="toc-heading">
+    <li><a href="#structure-and-navigation">Structure and Navigation</a></li>
+    <li><a href="#text-and-readability">Text and Readability</a></li>
+    <li><a href="#visual-design">Visual Design</a></li>
+    <li><a href="#tables-and-data">Tables and Data</a></li>
+    <li><a href="#multimedia">Multimedia</a></li>
+    <li><a href="#pdfs-and-scanned-documents">PDFs and Scanned Documents</a></li>
+    <li><a href="#neurodiversity-and-cognitive-accessibility">Neurodiversity and Cognitive Accessibility</a></li>
+    <li><a href="#final-checks-before-sharing">Final Checks Before Sharing</a></li>
+    <li><a href="#sources">Sources</a></li>
+  </ol>
+</nav>
+
+<main id="main-content">
+
+  <section id="structure-and-navigation" aria-labelledby="structure-and-navigation-heading">
+    <h2 id="structure-and-navigation-heading">1. Structure and Navigation</h2>
+    <table>
+      <caption class="sr-only">Structure and navigation: dos, avoids, and consequences</caption>
+      <thead>
+        <tr>
+          <th scope="col">Area</th>
+          <th scope="col">Do</th>
+          <th scope="col">Avoid</th>
+          <th scope="col">What happens if you don't?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Structure</th>
+          <td data-label="Do">Use built-in Heading styles and a logical hierarchy. Use PowerPoint's inbuilt layouts as they are already formatted for assistive technologies.</td>
+          <td data-label="Avoid">Manually formatting text to look like headings.</td>
+          <td data-label="What happens if you don't?">Screen reader users cannot navigate efficiently between sections and may have to read the entire document from start to finish.</td>
+        </tr>
+        <tr>
+          <th scope="row">Titles</th>
+          <td data-label="Do">Give every document and slide a unique, meaningful title.</td>
+          <td data-label="Avoid">Blank or repeated titles.</td>
+          <td data-label="What happens if you don't?">Screen reader users may not know where they are in the document or presentation.</td>
+        </tr>
+        <tr>
+          <th scope="row">Reading Order</th>
+          <td data-label="Do">Check the reading order in PowerPoint.</td>
+          <td data-label="Avoid">Assuming visual order matches screen reader order.</td>
+          <td data-label="What happens if you don't?">Content may be read in a confusing sequence.</td>
+        </tr>
+        <tr>
+          <th scope="row">Lists</th>
+          <td data-label="Do">Use proper bulleted and numbered lists.</td>
+          <td data-label="Avoid">Creating lists manually using symbols, tabs or spacing.</td>
+          <td data-label="What happens if you don't?">Assistive technologies may not recognise the content as a list.</td>
+        </tr>
+        <tr>
+          <th scope="row">Hyperlinks</th>
+          <td data-label="Do">Use meaningful link text that describes the destination.</td>
+          <td data-label="Avoid">"Click here", "More", or pasting long URLs.</td>
+          <td data-label="What happens if you don't?">Users navigating by links alone cannot determine where the link goes.</td>
+        </tr>
+        <tr>
+          <th scope="row">File Names</th>
+          <td data-label="Do">Use meaningful file names.</td>
+          <td data-label="Avoid">Vague names such as "Document1" or "Final_Final_v3".</td>
+          <td data-label="What happens if you don't?">Users may struggle to identify the correct file.</td>
+        </tr>
+        <tr>
+          <th scope="row">Document Titles</th>
+          <td data-label="Do">Add a meaningful title in document properties.</td>
+          <td data-label="Avoid">Leaving the default title.</td>
+          <td data-label="What happens if you don't?">Screen reader users may be unable to distinguish between documents.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="text-and-readability" aria-labelledby="text-and-readability-heading">
+    <h2 id="text-and-readability-heading">2. Text and Readability</h2>
+    <table>
+      <caption class="sr-only">Text and readability: dos, avoids, and consequences</caption>
+      <thead>
+        <tr>
+          <th scope="col">Area</th>
+          <th scope="col">Do</th>
+          <th scope="col">Avoid</th>
+          <th scope="col">What happens if you don't?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Fonts</th>
+          <td data-label="Do">Use clear sans-serif fonts and readable font sizes.</td>
+          <td data-label="Avoid">Decorative, handwritten or overly stylised fonts.</td>
+          <td data-label="What happens if you don't?">Text may be difficult to read for people with dyslexia, low vision or cognitive impairments.</td>
+        </tr>
+        <tr>
+          <th scope="row">Text Alignment</th>
+          <td data-label="Do">Keep text left-aligned.</td>
+          <td data-label="Avoid">Fully justified text.</td>
+          <td data-label="What happens if you don't?">Uneven spacing can make reading more difficult.</td>
+        </tr>
+        <tr>
+          <th scope="row">Plain Language</th>
+          <td data-label="Do">Use clear language and explain jargon, acronyms and technical terms.</td>
+          <td data-label="Avoid">Complex language or unexplained terminology.</td>
+          <td data-label="What happens if you don't?">Users may understand the words but not the meaning.</td>
+        </tr>
+        <tr>
+          <th scope="row">Acronyms</th>
+          <td data-label="Do">Define acronyms the first time they are used.</td>
+          <td data-label="Avoid">Assuming everyone knows specialist abbreviations.</td>
+          <td data-label="What happens if you don't?">Users may not understand the information provided.</td>
+        </tr>
+        <tr>
+          <th scope="row">Reading Ease</th>
+          <td data-label="Do">Use adequate spacing between lines and paragraphs.</td>
+          <td data-label="Avoid">Dense, crowded text.</td>
+          <td data-label="What happens if you don't?">Content becomes more difficult to track and process.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="visual-design" aria-labelledby="visual-design-heading">
+    <h2 id="visual-design-heading">3. Visual Design</h2>
+    <table>
+      <caption class="sr-only">Visual design: dos, avoids, and consequences</caption>
+      <thead>
+        <tr>
+          <th scope="col">Area</th>
+          <th scope="col">Do</th>
+          <th scope="col">Avoid</th>
+          <th scope="col">What happens if you don't?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Colour Contrast</th>
+          <td data-label="Do">Use sufficient contrast between text and background.</td>
+          <td data-label="Avoid">Low-contrast colour combinations.</td>
+          <td data-label="What happens if you don't?">Content may be unreadable for some users.</td>
+        </tr>
+        <tr>
+          <th scope="row">Colour Usage</th>
+          <td data-label="Do">Use labels, patterns or text as well as colour.</td>
+          <td data-label="Avoid">Using colour alone to convey meaning.</td>
+          <td data-label="What happens if you don't?">Users with colour vision deficiencies may miss important information.</td>
+        </tr>
+        <tr>
+          <th scope="row">Images</th>
+          <td data-label="Do">Add meaningful alt text to informative images.</td>
+          <td data-label="Avoid">Leaving images without alt text.</td>
+          <td data-label="What happens if you don't?">Screen readers cannot communicate the information contained in the image.</td>
+        </tr>
+        <tr>
+          <th scope="row">Decorative Images</th>
+          <td data-label="Do">Mark decorative images as decorative.</td>
+          <td data-label="Avoid">Adding unnecessary alt text to decorative images.</td>
+          <td data-label="What happens if you don't?">Screen reader users may have to listen to irrelevant content.</td>
+        </tr>
+        <tr>
+          <th scope="row">Charts and Graphs</th>
+          <td data-label="Do">Provide labels and explain key findings in text.</td>
+          <td data-label="Avoid">Presenting visual information without explanation.</td>
+          <td data-label="What happens if you don't?">Users who cannot see the chart may miss the key message.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="tables-and-data" aria-labelledby="tables-and-data-heading">
+    <h2 id="tables-and-data-heading">4. Tables and Data</h2>
+    <table>
+      <caption class="sr-only">Tables and data: dos, avoids, and consequences</caption>
+      <thead>
+        <tr>
+          <th scope="col">Area</th>
+          <th scope="col">Do</th>
+          <th scope="col">Avoid</th>
+          <th scope="col">What happens if you don't?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Tables</th>
+          <td data-label="Do">Use simple tables with clearly identified header rows.</td>
+          <td data-label="Avoid">Complex tables, merged cells, blank cells, or tables used for layout.</td>
+          <td data-label="What happens if you don't?">Screen readers may read information incorrectly or users may struggle to understand relationships between data.</td>
+        </tr>
+        <tr>
+          <th scope="row">Searchability</th>
+          <td data-label="Do">Ensure text can be selected and searched.</td>
+          <td data-label="Avoid">Image-based content that cannot be searched.</td>
+          <td data-label="What happens if you don't?">Users cannot easily locate information or use study-support tools effectively.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="multimedia" aria-labelledby="multimedia-heading">
+    <h2 id="multimedia-heading">5. Multimedia</h2>
+    <table>
+      <caption class="sr-only">Multimedia: dos, avoids, and consequences</caption>
+      <thead>
+        <tr>
+          <th scope="col">Area</th>
+          <th scope="col">Do</th>
+          <th scope="col">Avoid</th>
+          <th scope="col">What happens if you don't?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Video</th>
+          <td data-label="Do">Provide captions.</td>
+          <td data-label="Avoid">Uncaptioned videos.</td>
+          <td data-label="What happens if you don't?">Deaf and hard-of-hearing users may not be able to access the content.</td>
+        </tr>
+        <tr>
+          <th scope="row">Audio</th>
+          <td data-label="Do">Provide transcripts.</td>
+          <td data-label="Avoid">Audio recordings without transcripts.</td>
+          <td data-label="What happens if you don't?">Users who cannot hear the recording cannot access the information.</td>
+        </tr>
+        <tr>
+          <th scope="row">Multiple Formats</th>
+          <td data-label="Do">Provide information in more than one format where possible.</td>
+          <td data-label="Avoid">Providing content in only one format.</td>
+          <td data-label="What happens if you don't?">Some learners may be unable to access information using their preferred method.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="pdfs-and-scanned-documents" aria-labelledby="pdfs-and-scanned-documents-heading">
+    <h2 id="pdfs-and-scanned-documents-heading">6. PDFs and Scanned Documents</h2>
+    <table>
+      <caption class="sr-only">PDFs and scanned documents: dos, avoids, and consequences</caption>
+      <thead>
+        <tr>
+          <th scope="col">Area</th>
+          <th scope="col">Do</th>
+          <th scope="col">Avoid</th>
+          <th scope="col">What happens if you don't?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">PDFs</th>
+          <td data-label="Do">Create PDFs from accessible Word or PowerPoint files and check accessibility before sharing.</td>
+          <td data-label="Avoid">Printing or scanning directly to PDF without accessibility checks.</td>
+          <td data-label="What happens if you don't?">Important accessibility features such as headings and reading order may be lost.</td>
+        </tr>
+        <tr>
+          <th scope="row">Scanned Documents</th>
+          <td data-label="Do">Use OCR (Optical Character Recognition) to convert scans into accessible text.</td>
+          <td data-label="Avoid">Uploading image-only scans.</td>
+          <td data-label="What happens if you don't?">Screen readers cannot access the text content.</td>
+        </tr>
+        <tr>
+          <th scope="row">Text as Images</th>
+          <td data-label="Do">Use editable text whenever possible. If text must appear in an image, provide alternative text.</td>
+          <td data-label="Avoid">Sharing screenshots, posters or documents containing text as images.</td>
+          <td data-label="What happens if you don't?">Users cannot search, resize, translate, copy or have the content read aloud.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="neurodiversity-and-cognitive-accessibility" aria-labelledby="neurodiversity-and-cognitive-accessibility-heading">
+    <h2 id="neurodiversity-and-cognitive-accessibility-heading">7. Neurodiversity and Cognitive Accessibility</h2>
+    <table>
+      <caption class="sr-only">Neurodiversity and cognitive accessibility: dos, avoids, and consequences</caption>
+      <thead>
+        <tr>
+          <th scope="col">Area</th>
+          <th scope="col">Do</th>
+          <th scope="col">Avoid</th>
+          <th scope="col">What happens if you don't?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Cognitive Load</th>
+          <td data-label="Do">Break content into short sections with clear headings and white space.</td>
+          <td data-label="Avoid">Large blocks of dense text.</td>
+          <td data-label="What happens if you don't?">Users may struggle to locate, process and remember information.</td>
+        </tr>
+        <tr>
+          <th scope="row">Consistency</th>
+          <td data-label="Do">Use consistent layouts, colours, terminology and navigation.</td>
+          <td data-label="Avoid">Frequently changing formats and layouts.</td>
+          <td data-label="What happens if you don't?">Users spend effort understanding the format instead of the content.</td>
+        </tr>
+        <tr>
+          <th scope="row">Sensory Overload</th>
+          <td data-label="Do">Keep slides uncluttered and focused on key messages.</td>
+          <td data-label="Avoid">Busy slides with excessive text, images and colours.</td>
+          <td data-label="What happens if you don't?">Content can become overwhelming and difficult to process.</td>
+        </tr>
+        <tr>
+          <th scope="row">Animation and Movement</th>
+          <td data-label="Do">Use animation only when it adds value.</td>
+          <td data-label="Avoid">Excessive, flashing or auto-playing content.</td>
+          <td data-label="What happens if you don't?">Can distract users and increase cognitive load.</td>
+        </tr>
+        <tr>
+          <th scope="row">Pace of Information</th>
+          <td data-label="Do">Allow sufficient time for users to read and process content.</td>
+          <td data-label="Avoid">Auto-advancing slides or rapidly changing information.</td>
+          <td data-label="What happens if you don't?">Users may not have enough time to read, understand or take notes.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="final-checks-before-sharing" aria-labelledby="final-checks-before-sharing-heading">
+    <h2 id="final-checks-before-sharing-heading">8. Final Checks Before Sharing</h2>
+    <table>
+      <caption class="sr-only">Final checks before sharing: dos, avoids, and consequences</caption>
+      <thead>
+        <tr>
+          <th scope="col">Area</th>
+          <th scope="col">Do</th>
+          <th scope="col">Avoid</th>
+          <th scope="col">What happens if you don't?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Accessibility Checker</th>
+          <td data-label="Do">Run the Accessibility Checker before sharing.</td>
+          <td data-label="Avoid">Assuming content is accessible without testing.</td>
+          <td data-label="What happens if you don't?">Accessibility barriers may remain unnoticed until experienced by users.</td>
+        </tr>
+        <tr>
+          <th scope="row">Keyboard Accessibility</th>
+          <td data-label="Do">Ensure content can be navigated using a keyboard where relevant.</td>
+          <td data-label="Avoid">Requiring a mouse for essential interactions.</td>
+          <td data-label="What happens if you don't?">Users with motor impairments or screen reader users may be unable to access all content.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="sources" aria-labelledby="sources-heading">
+    <h2 id="sources-heading">Sources</h2>
+    <ul>
+      <li>
+        <a href="https://www.w3.org/WAI/standards-guidelines/wcag/" target="_blank" rel="noopener noreferrer">
+          Web Content Accessibility Guidelines (WCAG) &ndash; W3C Web Accessibility Initiative
+        </a>
+      </li>
+      <li>
+        <a href="https://blogs.qub.ac.uk/digitallearning/staff/digital-teaching/teaching-practice/digital-accessibility/" target="_blank" rel="noopener noreferrer">
+          Understanding the Importance of Digital Accessibility &ndash; Queen's DigiHub
+        </a>
+      </li>
+      <li>
+        <a href="https://support.microsoft.com/en-US/accessibility/word/make-your-word-documents-accessible-to-people-with-disabilities" target="_blank" rel="noopener noreferrer">
+          Make your Word documents accessible to people with disabilities &ndash; Microsoft Support
+        </a>
+      </li>
+      <li>
+        <a href="https://support.microsoft.com/en-US/Accessibility/excel/accessibility-best-practices-with-excel-spreadsheets#picktab=windows" target="_blank" rel="noopener noreferrer">
+          Accessibility best practices with Excel spreadsheets &ndash; Microsoft Support
+        </a>
+      </li>
+      <li>
+        <a href="https://support.microsoft.com/en-US/accessibility/powerpoint/make-your-powerpoint-presentations-accessible-to-people-with-disabilities#bkmk_testwin=&picktab=windows" target="_blank" rel="noopener noreferrer">
+          Make your PowerPoint presentations accessible to people with disabilities &ndash; Microsoft Support
+        </a>
+      </li>
+      <li>
+        <a href="https://www.gla.ac.uk/myglasgow/digitalaccessibility/learningandteachingstaff/teachinginclusionguidelines/" target="_blank" rel="noopener noreferrer">
+          Digital Accessibility &ndash; Teaching Inclusion Guidelines &ndash; University of Glasgow
+        </a>
+      </li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  <p>Accessible Content Cheat Sheet for creating documents, slides and other digital content. Generative AI tool Microsoft Copilot and AI-powered editing in Visual Studio Code was used to aid in the creation of this resource.</p>
+  <p>
+    <strong>A note on ARIA and HTML:</strong> when making web content, documents, or slides accessible, always use
+    native HTML elements and structures first (headings, lists, tables, buttons, links, form labels, etc.),
+    since they come with built-in semantics and keyboard support that assistive technologies already
+    understand. Only add ARIA roles, states and properties to fill gaps that native HTML cannot express,
+    such as custom interactive widgets or live regions. Unnecessary or incorrect ARIA can do more harm
+    than no ARIA at all, so it should be used to enhance native semantics, and not replace them.
+  </p>
+  <p>
+    This work is dedicated to the public domain under a
+    <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener noreferrer license">
+      Creative Commons CC0 1.0 Universal (Public Domain Dedication)
+    </a>. Feel free to copy, modify, distribute and use it, even for commercial purposes, without asking
+    permission.
+  </p>
+</footer>
+
+</body>
+</html>
